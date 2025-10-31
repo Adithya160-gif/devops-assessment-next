@@ -160,3 +160,19 @@ Access Application
 or find the IP:
     minikube ip
 
+
+Conclusion
+
+  This project demonstrates end-to-end DevOps workflow:
+
+  Code → Containerize → Automate → Deploy → Verify
+
+  It fulfills all assessment objectives — covering Docker, GitHub Actions, GHCR, and Kubernetes deployment using Minikube.
+
+
+  Contact
+
+    Sai Adithya Yarramasu
+    Email: saiyarramasu77@gmail.com
+    GitHub:https://github.com/Adithya160-gif?tab=repositories
+
