@@ -13,24 +13,34 @@ jobs:
       contents: read
       packages: write
 
+    env:
+      # Define lowercase username
+      USERNAME_LC: ${{ github.repository_owner }}
+
     steps:
       # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Log in to GHCR
+      # Step 2: Convert username to lowercase
+      - name: Convert username to lowercase
+        id: lower
+        run: |
+          echo "USERNAME_LC=$(echo '${{ env.USERNAME_LC }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      # Step 3: Log in to GHCR
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ env.USERNAME_LC }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 3: Build and push Docker image
+      # Step 4: Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ toLower(github.repository_owner) }}/devops-assessment-next:latest
+          tags: ghcr.io/${{ env.USERNAME_LC }}/devops-assessment-next:latest
 
