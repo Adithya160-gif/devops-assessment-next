@@ -14,11 +14,11 @@ jobs:
       packages: write
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Log in to GitHub Container Registry
+      # Step 2: Log in to GHCR
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -26,11 +26,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 3: Build and push the image
+      # Step 3: Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner,, }}/devops-assessment-next:latest
+          tags: ghcr.io/${{ toLower(github.repository_owner) }}/devops-assessment-next:latest
 
